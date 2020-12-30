@@ -21,7 +21,18 @@ cloud-native Micronaut applications using GRPC.
 
 Spring Boot performs better regarding compilation time since both Micronaut applications requires additionnal steps to compile code. Micronaut leverages AOT compilation to avoid using JDK proxies at runtime which takes few seconds to compile using KAPT. Furthermore, both Micronaut application are based on GRPC communication which requires additionnal compilation steps to create stubs, requests and responses.
 
-* Test time
+
+#### Test
+
+| Application | Testing time (gradle test) | Number of tests |
+| ------------| -------------------------- | --------------- |
+| Micronaut Users | 19s | 58 |
+| Micronaut Availability | 20s | 84 |
+| Spring Boot Users | 26s | 54 |
+| Spring Boot Availability | 35s | 62 |
+
+Micronaut outperforms Spring Boot during tests phases since most of the work is done at compile time. Micronaut GRPC based application are also faster since GRPC does not require to use a third party contract testing library.
+
 * Start dev mode
 
 ### Production metrics
