@@ -33,7 +33,16 @@ Spring Boot performs better regarding compilation time since both Micronaut appl
 
 Micronaut outperforms Spring Boot during tests phases since most of the work is done at compile time. Micronaut GRPC based application are also faster since GRPC does not require to use a third party contract testing library.
 
-* Start dev mode
+#### Startup time
+
+| Application | Startup time |
+| ------------| ------------ |
+| Micronaut Users | 3.3s |
+| Micronaut Availability | 2.7s |
+| Spring Boot Users | 12.4s |
+| Spring Boot Availability | 12.7s |
+
+Micronaut clearly outperforms Spring Boot as in tests phases since most of the work is done at compile time.
 
 ### Production metrics
 
