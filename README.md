@@ -10,6 +10,11 @@ cloud-native Micronaut applications using GRPC.
 
 ### Developer metrics
 
+Developer metrics gathered using a machine with the following specs: 
+* CPU: i7 7700K 4.20 GHz
+* RAM: 32 GB
+* OS: Windows 10 Professional
+
 #### Compilation
 
 | Application | Full compilation (gradle clean compileKotlin --rerun-tasks) | Compilation after change (gradle compileKotlin) |
@@ -19,7 +24,7 @@ cloud-native Micronaut applications using GRPC.
 | Spring Boot Users | 2s | 2s |
 | Spring Boot Availability | 2s | 2s |
 
-Spring Boot performs better regarding compilation time since both Micronaut applications requires additionnal steps to compile code. Micronaut leverages AOT compilation to avoid using JDK proxies at runtime which takes few seconds to compile using KAPT. Furthermore, both Micronaut application are based on GRPC communication which requires additionnal compilation steps to create stubs, requests and responses.
+Spring Boot performs better regarding compilation time since both Micronaut applications requires additional steps to compile code. Micronaut leverages AOT compilation to avoid using JDK proxies at runtime which takes few seconds to compile using KAPT. Furthermore, both Micronaut application are based on GRPC communication which requires additionnal compilation steps to create stubs, requests and responses.
 
 
 #### Test
@@ -38,7 +43,7 @@ Micronaut outperforms Spring Boot during tests phases since most of the work is 
 | Application | Startup time |
 | ------------| ------------ |
 | Micronaut Users | 3.3s |
-| Micronaut Availability | 2.7s |
+| Micronaut Availability | 3.4s |
 | Spring Boot Users | 12.4s |
 | Spring Boot Availability | 12.7s |
 
@@ -46,8 +51,17 @@ Micronaut clearly outperforms Spring Boot as in tests phases since most of the w
 
 ### Production metrics
 
-* Start time
-* Time to readiness probe ok
+Production metrics gathered using a GCP machine 'e2-highcpu-8 ' with the following specs:
+* CPU: 8 cores
+* RAM: 8 GB
+* OS: Linux
+
+| Application | Startup time | Readiness time |
+| ------------| ------------ | -------------- |
+| Micronaut Users | 3.3s | 8s |
+| Micronaut Availability | 3.4s | 8s |
+| Spring Boot Users |  | |
+| Spring Boot Availability |  | |
 
 #### Load test 10 virtual users
 
