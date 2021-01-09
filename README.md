@@ -63,6 +63,8 @@ Production metrics gathered using a GCP machine 'e2-highcpu-8 ' with the followi
 | Spring Boot Users | 6.8s | 13s |
 | Spring Boot Availability | 6.9s | 12s |
 
+As on local machine startup time tests, Micronaut outperforms Spring Boot most.
+
 #### Load test 10 virtual users
 
 No delay between requests, each virtual execute as many request as possible.
