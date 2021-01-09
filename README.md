@@ -60,8 +60,8 @@ Production metrics gathered using a GCP machine 'e2-highcpu-8 ' with the followi
 | ------------| ------------ | -------------- |
 | Micronaut Users | 3.3s | 8s |
 | Micronaut Availability | 3.4s | 8s |
-| Spring Boot Users |  | |
-| Spring Boot Availability |  | |
+| Spring Boot Users | 6.8s | 13s |
+| Spring Boot Availability | 6.9s | 12s |
 
 #### Load test 10 virtual users
 
