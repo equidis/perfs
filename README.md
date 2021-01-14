@@ -65,12 +65,20 @@ Production metrics gathered using a GCP machine 'e2-highcpu-8 ' with the followi
 
 As on local machine startup time tests, Micronaut outperforms Spring Boot most.
 
-#### Load test 10 virtual users
+### Performance tests
+
+#### Single machine (4 CPUs) / Single application instance
+
+##### Load test 10 virtual users
 
 No delay between requests, each virtual execute as many request as possible.
 
 * Requests executed
 * Request duration p50, p90, p99
 * Success rate
-* CPU 
+* CPU
 * Memory
+
+#### Two machines (4 CPUs each) / Single application instance
+
+#### Two machines (4 CPUs each) / Two application instances
