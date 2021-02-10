@@ -1,13 +1,11 @@
+import { UsersRestApi } from './users-rest-api';
+import { UsersGrpcApi } from './users-grpc-api';
 import { group } from 'k6';
-import { profileConfig } from './config/profile-config';
-import { UsersApi } from './apis/users-api';
-import { checkInterval, rangeVuIterSuffix } from './helpers/utils';
-import { conflictResponseChecks, createResponseChecks, notFoundResponseChecks, okResponseChecks } from './helpers/checks';
-import { isOk } from './helpers/assertions';
-import { UsersGrpcApi } from './apis/users-grpc-api';
-import { UsersRestApi } from './apis/users-rest-api';
-
-export const options = profileConfig();
+import { UsersApi } from './users-api';
+import { checkInterval, rangeVuIterSuffix } from '../helpers/utils';
+import { conflictResponseChecks, createResponseChecks, notFoundResponseChecks, okResponseChecks } from '../helpers/checks';
+import { isOk } from '../helpers/assertions';
+import { options } from '../app';
 
 const userTemplate = {
     username: 'k6test',
@@ -18,21 +16,23 @@ const userTemplate = {
     country_code: 'FR'
 }
 
-export default () => {
-    userLifecycle(contextualizeUser(userTemplate));
-}
+export class UsersScenario implements Scenario {
+    setup(): any {
+    }
 
-function userLifecycle(user) {
-    const interval = options.callInterval;
-    const userApi = options.rest ? new UsersRestApi() : new UsersGrpcApi();
-    return group(`User lifecycle`, () => {
-        const createdUser = userCreation(userApi, user, interval);
-        if (createdUser) {
-            userRetrieval(userApi, createdUser, options.findIterations, interval);
-            missingUser(userApi, options.findIterations);
-            return createdUser.id;
-        }
-    });
+    run(data: any): any {
+        const user = contextualizeUser(userTemplate)
+        const interval = options.callInterval;
+        const userApi = options.rest ? new UsersRestApi() : new UsersGrpcApi();
+        return group(`User lifecycle`, () => {
+            const createdUser = userCreation(userApi, user, interval);
+            if (createdUser) {
+                userRetrieval(userApi, createdUser, options.findIterations, interval);
+                missingUser(userApi, options.findIterations);
+                return createdUser.id;
+            }
+        });
+    }
 }
 
 function userCreation(userApi: UsersApi, user, interval: number) {

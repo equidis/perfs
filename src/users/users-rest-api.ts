@@ -1,7 +1,7 @@
 import { UsersApi } from './users-api';
 import http from 'k6/http';
-import { baseUrl, paths } from './url-constants';
 import { jsonContentType } from '../helpers/headers';
+import { baseUrl, paths } from '../url-constants';
 
 export const baseUsersApi = `${baseUrl.rest}${paths.users.rest}`;
 

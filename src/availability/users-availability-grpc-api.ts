@@ -1,10 +1,13 @@
 import { UsersAvailabilityApi } from './users-availability-api';
-import { baseUrl, paths } from './url-constants';
+import { baseUrl, paths, protos } from '../url-constants';
 // @ts-ignore
 import * as grpc from 'k6/net/grpc';
 
 const client = new grpc.Client();
-client.load(['../../src/main/proto', '../../build/extracted-include-protos/main'], 'users_availability.proto')
+client.load(
+    [`${protos.availability.dir}/src/main/proto`, `${protos.availability.dir}/build/extracted-include-protos/main`],
+    protos.availability.file
+)
 
 export class UsersAvailabilityGrpcApi implements UsersAvailabilityApi {
 

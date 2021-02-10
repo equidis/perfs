@@ -12,3 +12,13 @@ export const paths = {
         grpc: 'availabilities.UsersAvailabilityService'
     }
 };
+export const protos = {
+    users: {
+        dir: '../../micronaut-grpc-users-service',
+        file: 'users.proto'
+    },
+    availability: {
+        dir: '../../micronaut-grpc-availability-service',
+        file: 'users_availability.proto'
+    }
+};

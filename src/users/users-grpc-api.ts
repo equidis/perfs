@@ -1,10 +1,10 @@
 import { UsersApi } from './users-api';
-import { baseUrl, paths } from './url-constants';
 // @ts-ignore
 import * as grpc from 'k6/net/grpc';
+import { baseUrl, paths, protos } from '../url-constants';
 
 const client = new grpc.Client();
-client.load(['../../src/main/proto', '../../build/extracted-include-protos/main'], 'users.proto')
+client.load([`${protos.users.dir}/src/main/proto`, `${protos.users.dir}/build/extracted-include-protos/main`], protos.users.file)
 
 export class UsersGrpcApi implements UsersApi {
 

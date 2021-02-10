@@ -1,6 +1,6 @@
 import { UsersAvailabilityApi } from './users-availability-api';
 import http from 'k6/http';
-import { baseUrl, paths } from './url-constants';
+import { baseUrl, paths } from '../url-constants';
 import { jsonContentType } from '../helpers/headers';
 
 export const baseAvailabilitiesApi = `${baseUrl.rest}${paths.availabilities.rest}`;

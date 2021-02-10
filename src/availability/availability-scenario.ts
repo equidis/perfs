@@ -1,47 +1,47 @@
 import { group } from 'k6';
-import { profileConfig } from './config/profile-config';
-import { UsersAvailabilityApi } from './apis/users-availability-api';
-import { checkInterval } from './helpers/utils';
-import { conflictResponseChecks, createResponseChecks, notFoundResponseChecks, okResponseChecks } from './helpers/checks';
-import { body, hasAtLeastSize, isOk } from './helpers/assertions';
-import { UsersAvailabilityGrpcApi } from './apis/users-availability-grpc-api';
-import { UsersAvailabilityRestApi } from './apis/users-availability-rest-api';
-import { UsersRestApi } from './apis/users-rest-api';
-import { UsersGrpcApi } from './apis/users-grpc-api';
+import { profileConfig } from '../config/profile-config';
+import { UsersGrpcApi } from '../users/users-grpc-api';
+import { UsersRestApi } from '../users/users-rest-api';
+import { body, hasAtLeastSize, isOk } from '../helpers/assertions';
+import { UsersAvailabilityRestApi } from './users-availability-rest-api';
+import { UsersAvailabilityApi } from './users-availability-api';
+import { checkInterval } from '../helpers/utils';
+import { conflictResponseChecks, createResponseChecks, notFoundResponseChecks, okResponseChecks } from '../helpers/checks';
+import { UsersAvailabilityGrpcApi } from './users-availability-grpc-api';
 
 type User = { username: string, id: string };
 
 export const options = profileConfig();
 
-export function setup(): User {
-    const usersApi = options.rest ? new UsersRestApi() : new UsersGrpcApi();
-    const response = usersApi.create({
-        username: 'k6availabilitytest',
-        email: 'k6availabilitytest@mail.com',
-        first_name: 'K6',
-        last_name: 'Test',
-        phone_number: '123456789',
-        country_code: 'FR'
-    });
-    if (!isOk(response)) throw 'Unable to create an initial user';
-    return body(response);
-}
+export class AvailabilityScenario implements Scenario {
+    setup(): User {
+        const usersApi = options.rest ? new UsersRestApi() : new UsersGrpcApi();
+        const response = usersApi.create({
+            username: 'k6availabilitytest',
+            email: 'k6availabilitytest@mail.com',
+            first_name: 'K6',
+            last_name: 'Test',
+            phone_number: '123456789',
+            country_code: 'FR'
+        });
+        if (!isOk(response)) throw new Error('Unable to create an initial user');
+        return body(response);
+    }
 
-export default (user: User) => {
-    availabilityLifecycle(declareAvailabilityRequest(user.id), user);
-}
+    run(user: User): any {
+        const availability = declareAvailabilityRequest(user.id);
+        const interval = options.callInterval;
+        const availabilityApi = options.rest ? new UsersAvailabilityRestApi() : new UsersAvailabilityGrpcApi();
+        return group(`Availability lifecycle`, () => {
+            const createdAvailability = availabilityDeclaration(availabilityApi, availability, interval);
+            if (createdAvailability) {
+                availabilityRetrieval(availabilityApi, createdAvailability, user, options.findIterations, interval);
+                missingAvailability(availabilityApi, options.findIterations);
+                return createdAvailability.id;
+            }
+        });
+    }
 
-function availabilityLifecycle(availability, user: User) {
-    const interval = options.callInterval;
-    const availabilityApi = options.rest ? new UsersAvailabilityRestApi() : new UsersAvailabilityGrpcApi();
-    return group(`Availability lifecycle`, () => {
-        const createdAvailability = availabilityDeclaration(availabilityApi, availability, interval);
-        if (createdAvailability) {
-            availabilityRetrieval(availabilityApi, createdAvailability, user, options.findIterations, interval);
-            missingAvailability(availabilityApi, options.findIterations);
-            return createdAvailability.id;
-        }
-    });
 }
 
 function availabilityDeclaration(availabilityApi: UsersAvailabilityApi, availability, interval: number) {
@@ -78,13 +78,13 @@ function availabilityRetrieval(availabilityApi: UsersAvailabilityApi, availabili
             group('Find availability by user id', () => {
                 checkInterval(interval, availabilityApi.findByUser(user.id), {
                     'http code is ok': isOk,
-                    'is not empty': r => hasAtLeastSize(r, r => body(r).usersAvailabilities, 1)
+                    'is not empty': r => hasAtLeastSize(r, b => body(b).usersAvailabilities, 1)
                 });
             });
             group('Find availability by username', () => {
                 checkInterval(interval, availabilityApi.findByUser(null, user.username), {
                     'http code is ok': isOk,
-                    'is not empty': r => hasAtLeastSize(r, r => body(r).usersAvailabilities, 1)
+                    'is not empty': r => hasAtLeastSize(r, b => body(b).usersAvailabilities, 1)
                 });
             });
         });
@@ -92,7 +92,7 @@ function availabilityRetrieval(availabilityApi: UsersAvailabilityApi, availabili
 }
 
 function declareAvailabilityRequest(userId: string) {
-    let date = new Date();
+    const date = new Date();
     const days = parseInt(__VU.toString() + __ITER.toString());
     date.setDate(date.getDate() + days);
     const day = date.toISOString().substring(0, 10);

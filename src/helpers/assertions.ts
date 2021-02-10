@@ -15,12 +15,20 @@ export function isConflict(response: RefinedResponse<ResponseType>): boolean {
     return response.status === grpc.StatusAlreadyExists || response.status === 409;
 }
 
-export function body(response) {
-    return response.message || response.json();
+export function isArray(response, arrayExtractor) {
+    return Array.isArray(arrayExtractor(response));
 }
 
-export function isArray(response) {
-    return Array.isArray(body(response));
+export function hasSize(response, arrayExtractor, expectedSize: number) {
+    return isArray(response, arrayExtractor) && arrayExtractor(response).length === expectedSize;
+}
+
+export function hasAtLeastSize(response, arrayExtractor, expectedSize: number) {
+    return isArray(response, arrayExtractor) && arrayExtractor(response).length >= expectedSize;
+}
+
+export function body(response) {
+    return response.message || response.json();
 }
 
 export function hasId(response): boolean {
