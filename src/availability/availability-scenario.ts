@@ -5,7 +5,7 @@ import { UsersRestApi } from '../users/users-rest-api';
 import { body, hasAtLeastSize, isOk } from '../helpers/assertions';
 import { UsersAvailabilityRestApi } from './users-availability-rest-api';
 import { UsersAvailabilityApi } from './users-availability-api';
-import { checkInterval } from '../helpers/utils';
+import { checkInterval, random } from '../helpers/utils';
 import { conflictResponseChecks, createResponseChecks, notFoundResponseChecks, okResponseChecks } from '../helpers/checks';
 import { UsersAvailabilityGrpcApi } from './users-availability-grpc-api';
 
@@ -16,9 +16,10 @@ export const options = profileConfig();
 export class AvailabilityScenario implements Scenario {
     setup(): User {
         const usersApi = options.rest ? new UsersRestApi() : new UsersGrpcApi();
+        const testId = random(100000);
         const response = usersApi.create({
-            username: 'k6availabilitytest',
-            email: 'k6availabilitytest@mail.com',
+            username: `k6availabilitytest_${testId}`,
+            email: `k6availabilitytest_${testId}@mail.com`,
             first_name: 'K6',
             last_name: 'Test',
             phone_number: '123456789',

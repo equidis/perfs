@@ -23,7 +23,7 @@ export function rangeVuIterSuffix() {
     return `_VU_${__VU}_ITER${__ITER}_${random(10000)}`;
 }
 
-function random(max): string {
+export function random(max): string {
     return Math.floor(Math.random() * Math.floor(max)).toString();
 }
 
