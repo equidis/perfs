@@ -51,8 +51,8 @@ function availabilityDeclaration(availabilityApi: UsersAvailabilityApi, availabi
             const response = availabilityApi.declareAvailability(availability);
             checkInterval(interval, response, createResponseChecks);
             if (isOk(response)) {
-                const body = response.message || response.json();
-                return body.id && body;
+                const json = response.message || response.json();
+                return json.id && json;
             }
         });
         if (created) {
@@ -94,7 +94,7 @@ function availabilityRetrieval(availabilityApi: UsersAvailabilityApi, availabili
 
 function declareAvailabilityRequest(userId: string) {
     const date = new Date();
-    const days = parseInt(__VU.toString() + __ITER.toString());
+    const days = parseInt(__VU.toString() + __ITER.toString(), 10);
     date.setDate(date.getDate() + days);
     const day = date.toISOString().substring(0, 10);
     return {userId, day, arrangement: 0}

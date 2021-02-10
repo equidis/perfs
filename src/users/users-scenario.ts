@@ -18,6 +18,7 @@ const userTemplate = {
 
 export class UsersScenario implements Scenario {
     setup(): any {
+        // no setup required
     }
 
     run(data: any): any {
