@@ -118,6 +118,7 @@ As on local machine startup time tests, Micronaut outperforms Spring Boot most.
 
 ##### Load test 100 virtual users, no delay between requests
 
+| Metrics                         | Micronaut     | Spring Boot |
 |:-------------------------------:|:-------------:|:-----------:|
 | Total calls                     | 67584         |             |
 | Success rate                    | 100%          |             |
@@ -132,6 +133,7 @@ As on local machine startup time tests, Micronaut outperforms Spring Boot most.
 
 ##### Load test 200 virtual users, no delay between requests
 
+| Metrics                         | Micronaut     | Spring Boot |
 |:-------------------------------:|:-------------:|:-----------:|
 | Total calls                     | 134948        |             |
 | Success rate                    | 100%          |             |
@@ -146,6 +148,7 @@ As on local machine startup time tests, Micronaut outperforms Spring Boot most.
 
 ##### Load test 500 virtual users, no delay between requests
 
+| Metrics                         | Micronaut     | Spring Boot |
 |:-------------------------------:|:-------------:|:-----------:|
 | Total calls                     | 179916        |             |
 | Success rate                    | 100%          |             |
