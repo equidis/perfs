@@ -75,46 +75,46 @@ As on local machine startup time tests, Micronaut outperforms Spring Boot most.
 
 | Metrics                         | Micronaut     | Spring Boot |
 |:-------------------------------:|:-------------:|:-----------:|
-| Total calls                     | 45584         |             |
-| Success rate                    | 100%          |             |
-| Istio request duration (p50)    | 3.1ms         |             |
-| Istio request duration (p90)    | 4.7ms         |             |
-| Istio request duration (p99)    | 8.2ms         |             |
-| End user request duration (p50) | 5.09ms        |             |
-| End user request duration (p90) | 6.84ms        |             |
-| End user request duration (p95) | 7.44ms        |             |
-| CPU usage                       | 0.168         |             |
-| Memory usage                    | 286Mo         |             |
+| Total calls                     | 45584         | 45628       |
+| Success rate                    | 100%          | 100%        |
+| Istio request duration (p50)    | 3.1ms         | 3.3ms       |
+| Istio request duration (p90)    | 4.7ms         | 6.3ms       |
+| Istio request duration (p99)    | 8.2ms         | 9.7ms       |
+| End user request duration (p50) | 5.09ms        | 4.27ms      |
+| End user request duration (p90) | 6.84ms        | 7.5ms       |
+| End user request duration (p95) | 7.44ms        | 8.6ms       |
+| CPU usage                       | 0.168         | 0.241       |
+| Memory usage                    | 286Mo         | 324Mo       |
 
 ###### 500 VUs waiting 1 second between each call
 
 | Metrics                         | Micronaut     | Spring Boot |
 |:-------------------------------:|:-------------:|:-----------:|
-| Total calls                     | 112464        |             |
-| Success rate                    | 100%          |             |
-| Istio request duration (p50)    | 3.1ms         |             |
-| Istio request duration (p90)    | 4.8ms         |             |
-| Istio request duration (p99)    | 9.0ms         |             |
-| End user request duration (p50) | 5.14ms        |             |
-| End user request duration (p90) | 7.26ms        |             |
-| End user request duration (p95) | 8.08ms        |             |
-| CPU usage                       | 0.402         |             |
-| Memory usage                    | 289Mo         |             |
+| Total calls                     | 112464        | 113960      |
+| Success rate                    | 100%          | 100%        |
+| Istio request duration (p50)    | 3.1ms         | 3.4ms       |
+| Istio request duration (p90)    | 4.8ms         | 6.8ms       |
+| Istio request duration (p99)    | 9.0ms         | 10.0ms      |
+| End user request duration (p50) | 5.14ms        | 4.05ms      |
+| End user request duration (p90) | 7.26ms        | 7.34ms      |
+| End user request duration (p95) | 8.08ms        | 8.49ms      |
+| CPU usage                       | 0.402         | 0.525       |
+| Memory usage                    | 289Mo         | 348Mo       |
 
 ###### 1000 VUs waiting 1 second between each call
 
 | Metrics                         | Micronaut     | Spring Boot |
 |:-------------------------------:|:-------------:|:-----------:|
-| Total calls                     | 179916        |             |
-| Success rate                    | 100%          |             |
-| Istio request duration (p50)    | 3.4ms         |             |
-| Istio request duration (p90)    | 6.8ms         |             |
-| Istio request duration (p99)    | 10ms          |             |
-| End user request duration (p50) | 6.17ms        |             |
-| End user request duration (p90) | 10.46ms       |             |
-| End user request duration (p95) | 13.31ms       |             |
-| CPU usage                       | 0.762         |             |
-| Memory usage                    | 290Mo         |             |
+| Total calls                     | 179916        | 219164      | => why such a difference ?
+| Success rate                    | 100%          | 100%        |
+| Istio request duration (p50)    | 3.4ms         | 4ms         |
+| Istio request duration (p90)    | 6.8ms         | 22ms        |
+| Istio request duration (p99)    | 10ms          | 748ms       |
+| End user request duration (p50) | 6.17ms        | 5.11ms      |
+| End user request duration (p90) | 10.46ms       | 27.24ms     |
+| End user request duration (p95) | 13.31ms       | 58.98ms     |
+| CPU usage                       | 0.762         | 0.830       |
+| Memory usage                    | 290Mo         | 387Mo       |
 
 ##### Load test 100 virtual users, no delay between requests
 
